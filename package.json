@@ -1,21 +1,21 @@
-  {
-    "name": "typescript-express-server",
-    "version": "1.0.0",
-    "main": "dist/index.js",
-    "scripts": {
-      "dev": "node -r ts-node/register --env-file=.env --watch src/index.ts",
-      "build": "tsc",
-      "start": "node dist/index.js"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "description": "",
-    "dependencies": {
-      "express": "^4.21.2"
-    },
-    "devDependencies": {
-      "@types/express": "^5.0.0",
-      "ts-node": "^10.9.2"
-    }
+{
+  "name": "typescript-express-server",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "node -r ts-node/register --env-file=.env --watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "ts-node": "^10.9.2"
   }
+}
