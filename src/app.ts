@@ -11,3 +11,5 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
 });
 
 export default app;
+
+// npm i express; npm i -D ts-node @types/express
