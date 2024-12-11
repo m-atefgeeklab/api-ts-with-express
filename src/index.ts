@@ -1,7 +1,9 @@
 import app from "./app";
-import config from './config' ;
+import config from './config/env_file' ;
+import connectDB from "./config/connect_db";
 
-app.listen(config.port, () => {
+app.listen(config.port, async () => {
+  await connectDB();
   console.log(`Server is listening at port ${config.port}`);
 });
 
