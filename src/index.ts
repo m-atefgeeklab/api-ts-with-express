@@ -16,15 +16,16 @@ app.listen(config.port, async () => {
   console.log(`Server is running on http://localhost:${config.port}`);
 });
 
-// const fs = require('fs');
-// const path = require('path');
+// const fs = require("fs");
+// const path = require("path");
 // const { exec } = require("child_process");
 
 // // Playlist URL
-// const playlistUrl = 'https://www.youtube.com/playlist?list=PLEe8jzHjtRiRQWZugdORFlqCGh18fwnSz';
+// const playlistUrl =
+//   "https://www.youtube.com/playlist?list=PLEe8jzHjtRiRQWZugdORFlqCGh18fwnSz";
 
 // // Output directory for videos
-// const outputDir = path.join(__dirname, 'downloads');
+// const outputDir = path.join(__dirname, "downloads");
 
 // // Ensure the output directory exists
 // if (!fs.existsSync(outputDir)) {
@@ -47,64 +48,25 @@ app.listen(config.port, async () => {
 //   });
 // };
 
-// // Function to get the list of video URLs in the playlist
-// async function getPlaylistVideoUrls(playlistUrl) {
+// // Download playlist
+// async function downloadPlaylist(playlistUrl) {
 //   try {
-//     console.log('Fetching video URLs from the playlist...');
+//     console.log("Starting playlist download...");
 
-//     // Construct the yt-dlp command to extract video URLs
-//     const command = `yt-dlp --flat-playlist --get-url "${playlistUrl}"`;
-
-//     console.log(`Executing command: ${command}`);
-
-//     // Execute the command and get the list of video URLs
-//     const stdout = await execPromise(command);
-//     const videoUrls = stdout.trim().split('\n');
-
-//     console.log(`Found ${videoUrls.length} videos in the playlist.`);
-//     return videoUrls;
-//   } catch (error) {
-//     console.error('An error occurred while fetching video URLs:', error);
-//     throw error;
-//   }
-// }
-
-// // Function to download a single video
-// async function downloadVideo(videoUrl) {
-//   try {
-//     console.log(`Starting download for video: ${videoUrl}`);
-
-//     // Construct the yt-dlp command to download the video
-//     const command = `yt-dlp -o "${path.join(outputDir, '%(title)s.%(ext)s')}" -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --merge-output-format mp4 --no-continue "${videoUrl}"`;
+//     // Construct the yt-dlp command
+//     const command = `yt-dlp -o "${path.join(
+//       outputDir,
+//       "%(title)s.%(ext)s"
+//     )}" -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --merge-output-format mp4 --no-continue "${playlistUrl}"`;
 
 //     console.log(`Executing command: ${command}`);
 
 //     // Execute the command
 //     await execPromise(command);
 
-//     console.log(`Download completed for video: ${videoUrl}`);
+//     console.log("All videos downloaded!");
 //   } catch (error) {
-//     console.error(`An error occurred while downloading video: ${videoUrl}`, error);
-//     throw error;
-//   }
-// }
-
-// // Download playlist
-// async function downloadPlaylist(playlistUrl) {
-//   try {
-//     console.log('Starting playlist download...');
-
-//     // Get the list of video URLs in the playlist
-//     const videoUrls = await getPlaylistVideoUrls(playlistUrl);
-
-//     // Download each video one by one
-//     for (const videoUrl of videoUrls) {
-//       await downloadVideo(videoUrl);
-//     }
-
-//     console.log('All videos downloaded and processed successfully!');
-//   } catch (error) {
-//     console.error('An error occurred during playlist download:', error);
+//     console.error("An error occurred:", error);
 //   }
 // }
 
