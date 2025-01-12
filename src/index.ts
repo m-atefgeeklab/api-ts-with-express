@@ -68,3 +68,7 @@ app.listen(config.port, async () => {
 
 // // Start downloading
 // downloadPlaylist(playlistUrl);
+
+// "youtube-dl-exec": "^3.0.12",
+//     "ytdl-core": "^4.11.5",
+//     "ytpl": "^2.3.0"
