@@ -47,27 +47,70 @@ app.listen(config.port, async () => {
 //   });
 // };
 
-// // Download playlist
-// async function downloadPlaylist(playlistUrl) {
+// // Function to get the list of video URLs in the playlist
+// async function getPlaylistVideoUrls(playlistUrl) {
 //   try {
-//     console.log('Starting playlist download...');
+//     console.log('Fetching video URLs from the playlist...');
 
-//     // Construct the yt-dlp command
-//     const command = `yt-dlp -o "${path.join(outputDir, '%(title)s.%(ext)s')}" -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --no-playlist "${playlistUrl}"`;
+//     // Construct the yt-dlp command to extract video URLs
+//     const command = `yt-dlp --flat-playlist --get-url "${playlistUrl}"`;
+
+//     console.log(`Executing command: ${command}`);
+
+//     // Execute the command and get the list of video URLs
+//     const stdout = await execPromise(command);
+//     const videoUrls = stdout.trim().split('\n');
+
+//     console.log(`Found ${videoUrls.length} videos in the playlist.`);
+//     return videoUrls;
+//   } catch (error) {
+//     console.error('An error occurred while fetching video URLs:', error);
+//     throw error;
+//   }
+// }
+
+// // Function to download a single video
+// async function downloadVideo(videoUrl) {
+//   try {
+//     console.log(`Starting download for video: ${videoUrl}`);
+
+//     // Construct the yt-dlp command to download the video
+//     const command = `yt-dlp -o "${path.join(outputDir, '%(title)s.%(ext)s')}" -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --merge-output-format mp4 --no-continue "${videoUrl}"`;
 
 //     console.log(`Executing command: ${command}`);
 
 //     // Execute the command
 //     await execPromise(command);
 
-//     console.log('All videos downloaded!');
+//     console.log(`Download completed for video: ${videoUrl}`);
 //   } catch (error) {
-//     console.error('An error occurred:', error);
+//     console.error(`An error occurred while downloading video: ${videoUrl}`, error);
+//     throw error;
+//   }
+// }
+
+// // Download playlist
+// async function downloadPlaylist(playlistUrl) {
+//   try {
+//     console.log('Starting playlist download...');
+
+//     // Get the list of video URLs in the playlist
+//     const videoUrls = await getPlaylistVideoUrls(playlistUrl);
+
+//     // Download each video one by one
+//     for (const videoUrl of videoUrls) {
+//       await downloadVideo(videoUrl);
+//     }
+
+//     console.log('All videos downloaded and processed successfully!');
+//   } catch (error) {
+//     console.error('An error occurred during playlist download:', error);
 //   }
 // }
 
 // // Start downloading
 // downloadPlaylist(playlistUrl);
+
 
 // "youtube-dl-exec": "^3.0.12",
 //     "ytdl-core": "^4.11.5",
