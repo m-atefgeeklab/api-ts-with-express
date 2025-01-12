@@ -53,7 +53,7 @@ app.listen(config.port, async () => {
 //     console.log('Starting playlist download...');
 
 //     // Construct the yt-dlp command
-//     const command = `yt-dlp -o "${path.join(outputDir, '%(title)s.%(ext)s')}" -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" "${playlistUrl}"`;
+//     const command = `yt-dlp -o "${path.join(outputDir, '%(title)s.%(ext)s')}" -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --no-playlist "${playlistUrl}"`;
 
 //     console.log(`Executing command: ${command}`);
 
