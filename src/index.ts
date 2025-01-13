@@ -24,6 +24,131 @@ app.listen(config.port, async () => {
 
 // // Load configuration from environment variables or default values
 // const playlistFile = process.env.PLAYLIST_FILE || "playlists.txt";
+// const outputDir = path.join(__dirname, process.env.OUTPUT_DIR || "downloads");
+
+// // Ensure required directories exist
+// if (!fs.existsSync(outputDir)) {
+//   fs.mkdirSync(outputDir, { recursive: true });
+// }
+
+// // Function to sanitize folder names
+// const sanitizeFolderName = (name) => {
+//   const sanitized = name.replace(/[<>:"/\\|?*&]+/g, "_");
+//   return sanitized.substring(0, 22).trim();
+// };
+
+// const getPlaylistTitle = async (playlistUrl) => {
+//   const command = `yt-dlp --flat-playlist --get-title "${playlistUrl}"`;
+//   return new Promise((resolve, reject) => {
+//     exec(command, (error, stdout, stderr) => {
+//       if (error) {
+//         reject(error);
+//       } else {
+//         resolve(stdout.trim());
+//       }
+//     });
+//   });
+// };
+
+// const trackProgress = (command) => {
+//   const process = exec(command, { shell: true });
+
+//   process.stdout.on("data", (data) => {
+//     console.log(data.toString());
+//   });
+
+//   process.stderr.on("data", (data) => {
+//     console.error(data.toString());
+//   });
+
+//   return new Promise((resolve, reject) => {
+//     process.on("close", (code) => {
+//       if (code === 0) resolve();
+//       else reject(new Error(`Process exited with code ${code}`));
+//     });
+//   });
+// };
+
+// const readPlaylists = () => {
+//   if (!fs.existsSync(playlistFile)) {
+//     console.error(`Playlist file not found: ${playlistFile}`);
+//     process.exit(1);
+//   }
+//   return fs.readFileSync(playlistFile, "utf-8").split("\n").filter(Boolean);
+// };
+
+// const notifyCompletion = () => {
+//   notifier.notify({
+//     title: "Download Complete",
+//     message: "All playlists have been downloaded successfully!",
+//   });
+// };
+
+// async function downloadPlaylist(playlistUrl) {
+//   try {
+//     console.log(`Starting download for playlist: ${playlistUrl}`);
+
+//     const playlistTitle = await getPlaylistTitle(playlistUrl);
+//     const sanitizedTitle = sanitizeFolderName(playlistTitle); // Sanitize the folder name
+//     const playlistDir = path.join(outputDir, sanitizedTitle);
+//     const tempDir = path.join(playlistDir, "temp");
+
+//     // Ensure the playlist directory and temp directory exist
+//     if (!fs.existsSync(playlistDir)) {
+//       fs.mkdirSync(playlistDir, { recursive: true });
+//     }
+//     if (!fs.existsSync(tempDir)) {
+//       fs.mkdirSync(tempDir, { recursive: true });
+//     }
+
+//     const command = `yt-dlp --newline --no-part -o "${path.join(
+//       playlistDir,
+//       "%(title)s.%(ext)s"
+//     )}" --paths temp:"${tempDir}" -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --merge-output-format mp4 --no-continue --no-warnings "${playlistUrl}"`;
+
+//     console.log(`Executing command: ${command}`);
+
+//     await trackProgress(command);
+
+//     console.log(`Playlist downloaded successfully: ${playlistUrl}`);
+//   } catch (error) {
+//     console.error(`Failed to download playlist ${playlistUrl}:`, error.message);
+
+//     if (error.message.includes("nsig extraction failed")) {
+//       console.warn(
+//         "Warning: Some formats may be missing due to YouTube player script changes."
+//       );
+//     }
+
+//     if (error.message.includes("WinError 32")) {
+//       console.warn(
+//         "Warning: File locking issue detected. Ensure no other process is accessing the files."
+//       );
+//     }
+//   }
+// }
+
+// async function downloadAllPlaylists() {
+//   const playlists = readPlaylists();
+
+//   for (const playlist of playlists) {
+//     await downloadPlaylist(playlist);
+//   }
+
+//   notifyCompletion();
+// }
+
+// downloadAllPlaylists();
+
+
+// const fs = require("fs");
+// const path = require("path");
+// const { exec } = require("child_process");
+// const notifier = require("node-notifier");
+// require("dotenv").config();
+
+// // Load configuration from environment variables or default values
+// const playlistFile = process.env.PLAYLIST_FILE || "playlists.txt";
 // const outputDir = path.join(__dirname, process.env.OUTPUT_DIR || "download");
 // const tempDir = path.join(outputDir, "temp");
 
