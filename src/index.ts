@@ -73,6 +73,67 @@ app.listen(config.port, async () => {
 // // Start downloading
 // downloadPlaylist(playlistUrl);
 
+// const fs = require("fs");
+// const path = require("path");
+// const { exec } = require("child_process");
+
+// // Playlist URL
+// const playlistUrl =
+//   "https://www.youtube.com/playlist?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb";
+
+// // Output directory for videos
+// const outputDir = path.join(__dirname, "downloads");
+
+// // Ensure the output directory exists
+// if (!fs.existsSync(outputDir)) {
+//   fs.mkdirSync(outputDir);
+// }
+
+// const execPromise = (command) => {
+//   return new Promise((resolve, reject) => {
+//     exec(
+//       command,
+//       { shell: true, maxBuffer: 1024 * 1024 * 10 },
+//       (error, stdout, stderr) => {
+//         if (error) {
+//           console.error(
+//             `Command failed with exit code ${error.code}: ${
+//               stderr || error.message
+//             }`
+//           );
+//           return reject(new Error(stderr || error.message));
+//         }
+//         resolve(stdout);
+//       }
+//     );
+//   });
+// };
+
+// // Download playlist
+// async function downloadPlaylist(playlistUrl) {
+//   try {
+//     console.log("Starting playlist download...");
+
+//     // Construct the yt-dlp command
+//     const command = `yt-dlp --no-part -o "${path.join(
+//       outputDir,
+//       "%(title)s.%(ext)s"
+//     )}" -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --merge-output-format mp4 --no-continue "${playlistUrl}"`;
+
+//     console.log(`Executing command: ${command}`);
+
+//     // Execute the command
+//     await execPromise(command);
+
+//     console.log("All videos downloaded!");
+//   } catch (error) {
+//     console.error("An error occurred:", error.message);
+//   }
+// }
+
+// downloadPlaylist(playlistUrl);
+
+
 
 // "youtube-dl-exec": "^3.0.12",
 //     "ytdl-core": "^4.11.5",
