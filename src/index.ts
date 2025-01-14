@@ -33,18 +33,26 @@ app.listen(config.port, async () => {
 
 // // Function to sanitize folder names
 // const sanitizeFolderName = (name) => {
-//   const sanitized = name.replace(/[<>:"/\\|?*&]+/g, "_");
-//   return sanitized.substring(0, 22).trim();
+//   return name.replace(/[<>:"/\\|?*&\r\n]+/g, "_").trim();
 // };
 
+// // Function to deduplicate repeated lines in a string
+// const deduplicateLines = (str) => {
+//   const lines = str.split("\n").map((line) => line.trim()).filter(Boolean);
+//   return [...new Set(lines)].join(" ");
+// };
+
+// // Function to get playlist title from yt-dlp
 // const getPlaylistTitle = async (playlistUrl) => {
-//   const command = `yt-dlp --flat-playlist --get-title "${playlistUrl}"`;
+//   const command = `yt-dlp --print "%(playlist_title)s" --no-warnings "${playlistUrl}"`;
 //   return new Promise((resolve, reject) => {
 //     exec(command, (error, stdout, stderr) => {
 //       if (error) {
-//         reject(error);
+//         reject(new Error(`Failed to retrieve playlist title: ${stderr.trim() || error.message}`));
 //       } else {
-//         resolve(stdout.trim());
+//         const rawTitle = stdout.trim();
+//         const cleanTitle = deduplicateLines(rawTitle);
+//         resolve(cleanTitle);
 //       }
 //     });
 //   });
@@ -89,7 +97,9 @@ app.listen(config.port, async () => {
 //     console.log(`Starting download for playlist: ${playlistUrl}`);
 
 //     const playlistTitle = await getPlaylistTitle(playlistUrl);
-//     const sanitizedTitle = sanitizeFolderName(playlistTitle); // Sanitize the folder name
+//     console.log(`Cleaned Playlist Title: "${playlistTitle}"`);
+
+//     const sanitizedTitle = sanitizeFolderName(playlistTitle);
 //     const playlistDir = path.join(outputDir, sanitizedTitle);
 //     const tempDir = path.join(playlistDir, "temp");
 
@@ -113,13 +123,9 @@ app.listen(config.port, async () => {
 //     console.log(`Playlist downloaded successfully: ${playlistUrl}`);
 //   } catch (error) {
 //     console.error(`Failed to download playlist ${playlistUrl}:`, error.message);
-
 //     if (error.message.includes("nsig extraction failed")) {
-//       console.warn(
-//         "Warning: Some formats may be missing due to YouTube player script changes."
-//       );
+//       console.warn("Warning: Some formats may be missing due to YouTube player script changes.");
 //     }
-
 //     if (error.message.includes("WinError 32")) {
 //       console.warn(
 //         "Warning: File locking issue detected. Ensure no other process is accessing the files."
