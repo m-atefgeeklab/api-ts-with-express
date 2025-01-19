@@ -323,6 +323,102 @@ app.listen(config.port, async () => {
 
 // downloadPlaylist(playlistUrl);
 
+// const fs = require("fs");
+// const path = require("path");
+// const { exec } = require("child_process");
+
+// // Playlist URLs
+// const playlistUrls = [
+//   "https://youtube.com/playlist?list=PLOldSEMXUdZsFAEJwxYkE83dhm1ZkWEOL&si=akvMSK8LBV3X-fCj"
+// ];
+
+// // Output directory for videos
+// const outputDir = path.join(__dirname, "downloads");
+
+// // Ensure the output directory exists
+// if (!fs.existsSync(outputDir)) {
+//   fs.mkdirSync(outputDir);
+// }
+
+// // Function to sanitize folder names
+// const sanitizeFolderName = (name) => {
+//   return name.replace(/[<>:"/\\|?*&\r\n]+/g, "_").trim();
+// };
+
+// // Function to deduplicate repeated lines in a string
+// const deduplicateLines = (str) => {
+//   const lines = str.split("\n").map((line) => line.trim()).filter(Boolean);
+//   return [...new Set(lines)].join(" ");
+// };
+
+// // Function to get playlist title from yt-dlp
+// const getPlaylistTitle = (playlistUrl) => {
+//   const command = `yt-dlp --print "%(playlist_title)s" --no-warnings "${playlistUrl}"`;
+//   return new Promise((resolve, reject) => {
+//     exec(command, (error, stdout, stderr) => {
+//       if (error) {
+//         reject(new Error(`Failed to retrieve playlist title: ${stderr.trim() || error.message}`));
+//       } else {
+//         const rawTitle = stdout.trim();
+//         const cleanTitle = deduplicateLines(rawTitle);
+//         resolve(cleanTitle);
+//       }
+//     });
+//   });
+// };
+
+// // Function to execute shell commands
+// const execPromise = (command) => {
+//   return new Promise((resolve, reject) => {
+//     exec(command, { shell: true, maxBuffer: 1024 * 1024 * 10 }, (error, stdout, stderr) => {
+//       if (error) {
+//         console.error(`Command failed: ${stderr || error.message}`);
+//         return reject(new Error(stderr || error.message));
+//       }
+//       resolve(stdout);
+//     });
+//   });
+// };
+
+// // Download playlists
+// const downloadPlaylists = async (playlistUrls) => {
+//   for (const playlistUrl of playlistUrls) {
+//     try {
+//       console.log("Starting playlist download...");
+
+//       // Get and sanitize the playlist title
+//       const playlistTitle = await getPlaylistTitle(playlistUrl);
+//       console.log(`Cleaned Playlist Title: "${playlistTitle}"`);
+
+//       const sanitizedTitle = sanitizeFolderName(playlistTitle);
+//       const playlistDir = path.join(outputDir, sanitizedTitle);
+
+//       // Ensure the subfolder for the playlist exists
+//       if (!fs.existsSync(playlistDir)) {
+//         fs.mkdirSync(playlistDir, { recursive: true });
+//       }
+
+//       // Construct the yt-dlp command
+//       const command = `yt-dlp --no-part -o "${path.join(
+//         playlistDir,
+//         "%(title)s.%(ext)s"
+//       )}" -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --merge-output-format mp4 --no-continue "${playlistUrl}"`;
+
+//       console.log(`Executing command: ${command}`);
+
+//       // Execute the command
+//       await execPromise(command);
+
+//       console.log(`Playlist "${playlistTitle}" downloaded successfully!`);
+//     } catch (error) {
+//       console.error("An error occurred:", error.message);
+//     }
+//   }
+// };
+
+// // Start downloading playlists
+// downloadPlaylists(playlistUrls);
+
 
 
 // "youtube-dl-exec": "^3.0.12",
